@@ -239,43 +239,49 @@
   </nav>
 
   <!-- Hero Section -->
-  <section id="hero" class="relative bg-gray-50 dark:bg-gray-800 py-12 md:py-24 flex flex-col items-center text-center px-4 md:px-6">
-    <img src="assets/banner.webp" alt="Shitzu DEX Banner" class="absolute inset-0 w-full h-full object-cover opacity-20" />
-    <h1 class="relative text-3xl md:text-5xl font-bold primary-text" x-text="t('hero.title')"></h1>
-    <p class="relative mt-4 text-lg md:text-2xl text-gray-700 dark:text-gray-300" x-text="t('hero.subtitle')"></p>
-    <a href="https://dex.orderly.network/test-dex-0787/" class="relative mt-8 inline-block primary-bg text-white font-medium rounded-md px-6 py-3 hover:bg-blue-700 transition-colors" x-text="t('hero.cta')"></a>
-  </section>
+<section id="hero" class="relative bg-gray-50 dark:bg-gray-800 py-12 md:py-24 flex flex-col items-center text-center px-4 md:px-6 overflow-hidden">
+  <img src="assets/banner.webp" alt="Shitzu DEX Banner" class="absolute inset-0 w-full h-full object-cover opacity-30" />
+  <div class="absolute inset-0 bg-gradient-to-br from-primary-500 via-transparent to-primary-700 dark:from-primary-800 dark:to-primary-900 opacity-40"></div>
+  <div class="relative z-10 flex flex-col items-center">
+    <iconify-icon icon="mdi:rocket" class="text-5xl md:text-7xl text-primary mb-4 animate-bounce"></iconify-icon>
+    <h1 class="text-4xl md:text-6xl font-extrabold text-primary-900 dark:text-primary-100 mb-4 drop-shadow-lg" x-text="t('hero.title')"></h1>
+    <p class="mt-2 text-lg md:text-2xl text-gray-700 dark:text-gray-300 max-w-2xl" x-text="t('hero.subtitle')"></p>
+    <a href="https://dex.orderly.network/test-dex-0787/" class="mt-8 inline-flex items-center primary-bg text-white font-medium rounded-md px-6 py-3 hover:bg-primary-700 transition-colors shadow-lg" x-text="t('hero.cta')">
+      <iconify-icon icon="mdi:arrow-right" class="ml-2 text-xl"></iconify-icon>
+    </a>
+  </div>
+</section>
 
   <!-- Features Section -->
   <section id="features" class="py-12 md:py-20 bg-white dark:bg-gray-900 px-4 md:px-6">
     <h2 class="text-2xl md:text-4xl font-semibold text-center primary-text mb-8" x-text="t('nav.features')"></h2>
 <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-  <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+  <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 hover:shadow-lg transition-colors duration-200">
     <iconify-icon icon="mdi:rocket" class="text-2xl text-green-500 mb-2"></iconify-icon>
     <h3 class="font-medium mb-2">Omnichain Infrastructure</h3>
     <p class="text-sm text-gray-600 dark:text-gray-300">Built on Orderly Network’s omnichain layer for unified liquidity across EVM chains and Solana.</p>
   </div>
-  <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+  <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 hover:shadow-lg transition-colors duration-200">
     <iconify-icon icon="mdi:lightning-bolt" class="text-2xl text-green-500 mb-2"></iconify-icon>
     <h3 class="font-medium mb-2">Up to 50x Leverage</h3>
     <p class="text-sm text-gray-600 dark:text-gray-300">Trade perpetual futures with high leverage while maintaining professional risk tools.</p>
   </div>
-  <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+  <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 hover:shadow-lg transition-colors duration-200">
     <iconify-icon icon="mdi:shield" class="text-2xl text-green-500 mb-2"></iconify-icon>
     <h3 class="font-medium mb-2">Advanced Order Types</h3>
     <p class="text-sm text-gray-600 dark:text-gray-300">Limit, stop‑loss, take‑profit, conditional and trailing orders for sophisticated strategies.</p>
   </div>
-  <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+  <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 hover:shadow-lg transition-colors duration-200">
     <iconify-icon icon="mdi:star" class="text-2xl text-green-500 mb-2"></iconify-icon>
     <h3 class="font-medium mb-2">Cross‑Margin Account</h3>
     <p class="text-sm text-gray-600 dark:text-gray-300">Use your entire balance as collateral across all positions for capital efficiency.</p>
   </div>
-  <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+  <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 hover:shadow-lg transition-colors duration-200">
     <iconify-icon icon="mdi:arrow-right" class="text-2xl text-green-500 mb-2"></iconify-icon>
     <h3 class="font-medium mb-2">Low Fees & Competitive Spreads</h3>
     <p class="text-sm text-gray-600 dark:text-gray-300">Transparent maker/taker fees starting at 0.02% / 0.05%.</p>
   </div>
-  <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+  <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 hover:shadow-lg transition-colors duration-200">
     <iconify-icon icon="mdi:rocket" class="text-2xl text-green-500 mb-2"></iconify-icon>
     <h3 class="font-medium mb-2">Real‑Time Market Data</h3>
     <p class="text-sm text-gray-600 dark:text-gray-300">Live analytics and price feeds for informed trading decisions.</p>
@@ -296,20 +302,26 @@
   </section>
 
   <!-- Fee Structure Section -->
-  <section id="fee" class="py-12 md:py-20 bg-gray-50 dark:bg-gray-800 px-4 md:px-6">
-    <h2 class="text-2xl md:text-4xl font-semibold text-center primary-text mb-8" x-text="t('fee.title')"></h2>
-    <p class="max-w-2xl mx-auto text-center text-gray-700 dark:text-gray-300" x-text="t('fee.content')"></p>
-    <div class="mt-8 flex flex-col md:flex-row justify-center items-center gap-6">
-      <div class="p-4 bg-white dark:bg-gray-900 rounded-lg shadow-md w-64">
-        <h3 class="font-medium text-center mb-2">Maker Fee</h3>
-        <p class="text-3xl font-bold text-primary-text text-center">0.02%</p>
+<section id="fee" class="py-12 md:py-20 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 px-4 md:px-6">
+  <h2 class="text-2xl md:text-4xl font-semibold text-center text-primary-text mb-8" x-text="t('fee.title')"></h2>
+  <p class="max-w-2xl mx-auto text-center text-gray-700 dark:text-gray-300 mb-10" x-text="t('fee.content')"></p>
+  <div class="mt-8 flex flex-col md:flex-row justify-center items-stretch gap-6">
+    <div class="p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col items-center">
+      <div class="flex items-center mb-3">
+        <iconify-icon icon="mdi:check" class="text-2xl text-green-500 mr-2"></iconify-icon>
+        <h3 class="font-medium text-center">Maker Fee</h3>
       </div>
-      <div class="p-4 bg-white dark:bg-gray-900 rounded-lg shadow-md w-64">
-        <h3 class="font-medium text-center mb-2">Taker Fee</h3>
-        <p class="text-3xl font-bold text-primary-text text-center">0.05%</p>
-      </div>
+      <p class="text-4xl font-extrabold text-primary-text text-center">0.02%</p>
     </div>
-  </section>
+    <div class="p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col items-center">
+      <div class="flex items-center mb-3">
+        <iconify-icon icon="mdi:rocket" class="text-2xl text-blue-500 mr-2"></iconify-icon>
+        <h3 class="font-medium text-center">Taker Fee</h3>
+      </div>
+      <p class="text-4xl font-extrabold text-primary-text text-center">0.05%</p>
+    </div>
+  </div>
+</section>
 
   <!-- FAQ Section -->
   <section id="faq" class="py-12 md:py-20 bg-white dark:bg-gray-900 px-4 md:px-6">
