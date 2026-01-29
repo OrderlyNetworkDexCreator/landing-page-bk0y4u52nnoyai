@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" x-data="themeAndLang()" :class="{ 'dark': darkMode }" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shitzu DEX</title>
+  <meta name="description" content="Trade perpetual futures across EVM chains and Solana on a non-custodial DEX powered by Orderly Network. Unified liquidity, up to 50x leverage, and professional trading tools." />
+  <meta name="keywords" content="DEX, perpetual futures, Orderly Network, omnichain trading, DeFi, cryptocurrency trading, cross-chain, leverage trading, non-custodial, EVM, Solana" />
+  <meta property="og:title" content="Shitzu DEX" />
+  <meta property="og:description" content="Trade perpetual futures across EVM chains and Solana on a non-custodial DEX powered by Orderly Network. Unified liquidity, up to 50x leverage, and professional trading tools." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="assets/primaryLogo.webp" type="image/webp" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Enable class‑based dark mode
+    if (window.tailwind) {
+      tailwind.config = { darkMode: 'class' };
+    } else {
+      window.addEventListener('load', () => { tailwind.config = { darkMode: 'class' }; });
+    }
+  </script>
+
+  <!-- Iconify -->
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+  <!-- Theme & i18n definition (must be before Alpine) -->
+  <script>
+    function themeAndLang() {
+      // Determine initial theme (default dark as per config)
+      const storedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialDark = storedTheme ? storedTheme === 'dark' : true; // config default is dark
+
+      // Determine initial language (first supported language if none stored)
+      const supported = ['en', 'de'];
+      const storedLang = localStorage.getItem('lang');
+      const initialLang = storedLang && supported.includes(storedLang) ? storedLang : supported[0];
+
+      return {
+        darkMode: initialDark,
+        mobileMenu: false,
+        lang: initialLang,
+        translations: {
+          en: {
+            nav: {
+              home: 'Home',
+              features: 'Features',
+              about: 'About',
+              fee: 'Fees',
+              faq: 'FAQ',
+              team: 'Team'
+            },
+            hero: {
+              title: 'Shitzu DEX',
+              subtitle: 'Unified perpetual futures across EVM chains & Solana',
+              cta: 'Start Trading'
+            },
+            cta: {
+              button: 'Start Trading'
+            },
+            about: {
+              title: 'Why Shitzu DEX?',
+              content: 'Built on Orderly Network’s omnichain infrastructure, Shitzu DEX breaks down blockchain barriers, offering deep liquidity, competitive fees, and professional‑grade tools—all from a single non‑custodial interface.'
+            },
+            fee: {
+              title: 'Fee Structure',
+              content: 'Maker fees start at 0.02% and taker fees at 0.05%. Fees decrease with higher volume and are applied per trade. No hidden costs – just transparent, competitive spreads.'
+            },
+            team: {
+              title: 'Our Team'
+            },
+            footer: {
+              cta: 'Start Trading'
+            }
+          },
+          de: {
+            nav: {
+              home: 'Startseite',
+              features: 'Funktionen',
+              about: 'Über uns',
+              fee: 'Gebühren',
+              faq: 'FAQ',
+              team: 'Team'
+            },
+            hero: {
+              title: 'Shitzu DEX',
+              subtitle: 'Vereinheitlichte Perpetual Futures über EVM‑Chains & Solana',
+              cta: 'Jetzt handeln'
+            },
+            cta: {
+              button: 'Jetzt handeln'
+            },
+            about: {
+              title: 'Warum Shitzu DEX?',
+              content: 'Auf der Omnichain‑Infrastruktur von Orderly Network aufgebaut, überwindet Shitzu DEX Blockchain‑Barrieren und bietet tiefe Liquidität, wettbewerbsfähige Gebühren und professionelle Werkzeuge – alles in einer nicht‑custodialen Oberfläche.'
+            },
+            fee: {
+              title: 'Gebührenstruktur',
+              content: 'Maker‑Gebühren beginnen bei 0,02 % und Taker‑Gebühren bei 0,05 %. Die Gebühren sinken mit höherem Volumen und werden pro Trade angewendet. Keine versteckten Kosten – nur transparente, wettbewerbsfähige Spreads.'
+            },
+            team: {
+              title: 'Unser Team'
+            },
+            footer: {
+              cta: 'Jetzt handeln'
+            }
+          }
+        },
+        languageNames: {
+          en: 'English',
+          de: 'Deutsch'
+        },
+        toggleTheme() {
+          this.darkMode = !this.darkMode;
+          localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
+        },
+        setLang(code) {
+          this.lang = code;
+          localStorage.setItem('lang', code);
+        },
+        t(key) {
+          const keys = key.split('.');
+          let value = this.translations[this.lang];
+          for (const k of keys) {
+            if (value && k in value) {
+              value = value[k];
+            } else {
+              value = null;
+              break;
+            }
+          }
+          // Fallback to English if missing
+          if (!value) {
+            value = this.translations['en'];
+            for (const k of keys) {
+              if (value && k in value) {
+                value = value[k];
+              } else {
+                value = '';
+                break;
+              }
+            }
+          }
+          return value || '';
+        },
+        // FAQ items (static, not translated)
+        faqItems: [
+          { question: 'What is Orderly Network and how does it power this DEX?', answer: 'Orderly Network is an omnichain infrastructure layer that powers this DEX, providing unified liquidity across EVM chains and Solana. It enables seamless cross-chain perpetual futures trading with deep liquidity and professional‑grade trading infrastructure.' },
+          { question: 'Can I trade perpetual futures across different blockchains?', answer: 'Yes! This DEX is built on Orderly Network’s omnichain infrastructure, allowing you to trade perpetual futures across multiple EVM chains and Solana from a single interface. Your positions and collateral are unified across all supported chains.' },
+          { question: 'What is the maximum leverage I can use?', answer: 'You can trade with up to 50x leverage on perpetual futures contracts. However, higher leverage increases both potential profits and risks. Always use appropriate risk management strategies and never risk more than you can afford to lose.' },
+          { question: 'How does cross‑margin trading work?', answer: 'Cross‑margin trading allows you to use your entire account balance as collateral for all open positions. This maximizes capital efficiency by sharing margin across positions, but also means that losses in one position can affect your other positions. Monitor your account health and use stop‑loss orders to manage risk.' },
+          { question: 'What are the trading fees?', answer: 'Trading fees are competitive and vary based on whether you’re a maker (providing liquidity) or taker (taking liquidity). Maker fees are typically lower than taker fees. Check the fee structure section for detailed information.' },
+          { question: 'Which wallets are supported?', answer: 'We support a wide range of wallets including MetaMask, WalletConnect‑compatible wallets, Privy (for email and social logins), and Solana wallets. You can connect wallets from multiple chains to access the full omnichain trading experience.' },
+          { question: 'How do I manage my risk when trading with leverage?', answer: 'Use stop‑loss orders to limit potential losses, maintain adequate margin levels, diversify your positions, and never risk more than you can afford to lose. Monitor your account health and liquidation price regularly. Consider using lower leverage until you’re comfortable with the risks.' },
+          { question: 'What order types are available?', answer: 'We support multiple order types including market orders, limit orders, stop‑loss orders, and take‑profit orders. Advanced traders can also use conditional orders and trailing stops to implement sophisticated trading strategies.' },
+          { question: 'Is my collateral safe and secure?', answer: 'Yes. This DEX is non‑custodial, meaning you maintain full control of your funds. Your collateral is secured by Orderly Network’s infrastructure, which uses smart contracts on‑chain. The platform has been audited and is built on battle‑tested DeFi infrastructure. However, always be aware that trading involves risk, and you should never deposit more than you can afford to lose.' },
+          { question: 'How does the unified liquidity pool work?', answer: 'Orderly Network aggregates liquidity from across all supported chains into a unified pool. This means you get access to deeper liquidity, tighter spreads, and better execution prices regardless of which blockchain you’re trading on. The unified pool ensures optimal trading conditions for all users.' }
+        ],
+        // Team members (static)
+        teamMembers: [
+          {
+            name: 'Mario Reder',
+            description: 'CTO',
+            links: [
+              { label: 'X', url: 'https://x.com/marior_dev' }
+            ],
+            image: 'assets/team/member1.webp'
+          }
+        ]
+      };
+    }
+  </script>
+
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Custom Font & Global Styles -->
+  <style>
+    body { font-family: 'Manrope', sans-serif; }
+    .primary-bg { background-color: #0066ff; }
+    .primary-text { color: #0066ff; }
+    .link-text { color: #64b5f6; }
+  </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors">
+  <!-- Header -->
+  <header class="flex items-center justify-between px-4 md:px-6 py-4 bg-gray-100 dark:bg-gray-800">
+    <div class="flex items-center space-x-3">
+      <img src="assets/primaryLogo.webp" alt="Shitzu DEX Logo" class="w-10 h-10" />
+      <span class="text-xl font-bold primary-text" x-text="t('nav.home')"></span>
+    </div>
+    <nav class="hidden md:flex space-x-6">
+      <a href="#hero" class="link-text hover:underline" x-text="t('nav.home')"></a>
+      <a href="#features" class="link-text hover:underline" x-text="t('nav.features')"></a>
+      <a href="#about" class="link-text hover:underline" x-text="t('nav.about')"></a>
+      <a href="#fee" class="link-text hover:underline" x-text="t('nav.fee')"></a>
+      <a href="#faq" class="link-text hover:underline" x-text="t('nav.faq')"></a>
+      <a href="#team" class="link-text hover:underline" x-text="t('nav.team')"></a>
+    </nav>
+    <div class="flex items-center space-x-4">
+      <!-- Language Switcher -->
+      <div class="relative" x-data="{ open: false }">
+        <button @click="open = !open" class="flex items-center space-x-1 text-gray-600 dark:text-gray-300 focus:outline-none">
+          <iconify-icon icon="mdi:earth" class="text-xl"></iconify-icon>
+          <span x-text="languageNames[lang]"></span>
+          <iconify-icon icon="mdi:menu" class="text-sm" x-show="!open"></iconify-icon>
+          <iconify-icon icon="mdi:close" class="text-sm" x-show="open"></iconify-icon>
+        </button>
+        <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded shadow-lg">
+          <template x-for="(name, code) in languageNames" :key="code">
+            <button @click="setLang(code); open = false" class="block w-full text-left px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" x-text="name"></button>
+          </template>
+        </div>
+      </div>
+      <!-- Theme Toggle -->
+      <button @click="toggleTheme()" class="focus:outline-none text-gray-600 dark:text-gray-300">
+        <iconify-icon icon="mdi:sun" class="text-2xl" x-show="!darkMode"></iconify-icon>
+        <iconify-icon icon="mdi:moon" class="text-2xl" x-show="darkMode"></iconify-icon>
+      </button>
+      <!-- Mobile Menu Button -->
+      <button @click="mobileMenu = !mobileMenu" class="md:hidden focus:outline-none text-gray-600 dark:text-gray-300">
+        <iconify-icon icon="mdi:menu" class="text-2xl" x-show="!mobileMenu"></iconify-icon>
+        <iconify-icon icon="mdi:close" class="text-2xl" x-show="mobileMenu"></iconify-icon>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <nav x-show="mobileMenu" class="md:hidden bg-gray-100 dark:bg-gray-800 px-4 py-2">
+    <a href="#hero" class="block py-1 link-text" x-text="t('nav.home')"></a>
+    <a href="#features" class="block py-1 link-text" x-text="t('nav.features')"></a>
+    <a href="#about" class="block py-1 link-text" x-text="t('nav.about')"></a>
+    <a href="#fee" class="block py-1 link-text" x-text="t('nav.fee')"></a>
+    <a href="#faq" class="block py-1 link-text" x-text="t('nav.faq')"></a>
+    <a href="#team" class="block py-1 link-text" x-text="t('nav.team')"></a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="relative bg-gray-50 dark:bg-gray-800 py-12 md:py-24 flex flex-col items-center text-center px-4 md:px-6">
+    <img src="assets/banner.webp" alt="Shitzu DEX Banner" class="absolute inset-0 w-full h-full object-cover opacity-20" />
+    <h1 class="relative text-3xl md:text-5xl font-bold primary-text" x-text="t('hero.title')"></h1>
+    <p class="relative mt-4 text-lg md:text-2xl text-gray-700 dark:text-gray-300" x-text="t('hero.subtitle')"></p>
+    <a href="https://dex.orderly.network/test-dex-0787/" class="relative mt-8 inline-block primary-bg text-white font-medium rounded-md px-6 py-3 hover:bg-blue-700 transition-colors" x-text="t('hero.cta')"></a>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-12 md:py-20 bg-white dark:bg-gray-900 px-4 md:px-6">
+    <h2 class="text-2xl md:text-4xl font-semibold text-center primary-text mb-8" x-text="t('nav.features')"></h2>
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+        <iconify-icon icon="mdi:check" class="text-3xl text-green-500 mb-2"></iconify-icon>
+        <h3 class="font-medium mb-2">Omnichain Infrastructure</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Built on Orderly Network’s omnichain layer for unified liquidity across EVM chains and Solana.</p>
+      </div>
+      <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+        <iconify-icon icon="mdi:check" class="text-3xl text-green-500 mb-2"></iconify-icon>
+        <h3 class="font-medium mb-2">Up to 50x Leverage</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Trade perpetual futures with high leverage while maintaining professional risk tools.</p>
+      </div>
+      <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+        <iconify-icon icon="mdi:check" class="text-3xl text-green-500 mb-2"></iconify-icon>
+        <h3 class="font-medium mb-2">Advanced Order Types</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Limit, stop‑loss, take‑profit, conditional and trailing orders for sophisticated strategies.</p>
+      </div>
+      <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+        <iconify-icon icon="mdi:check" class="text-3xl text-green-500 mb-2"></iconify-icon>
+        <h3 class="font-medium mb-2">Cross‑Margin Account</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Use your entire balance as collateral across all positions for capital efficiency.</p>
+      </div>
+      <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+        <iconify-icon icon="mdi:check" class="text-3xl text-green-500 mb-2"></iconify-icon>
+        <h3 class="font-medium mb-2">Low Fees & Competitive Spreads</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Transparent maker/taker fees starting at 0.02% / 0.05%.</p>
+      </div>
+      <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+        <iconify-icon icon="mdi:check" class="text-3xl text-green-500 mb-2"></iconify-icon>
+        <h3 class="font-medium mb-2">Real‑Time Market Data</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Live analytics and price feeds for informed trading decisions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section (also appears in footer) -->
+  <section class="py-12 md:py-20 bg-primary-bg text-white text-center">
+    <h2 class="text-2xl md:text-4xl font-bold mb-4" x-text="t('cta.button')"></h2>
+    <a href="https://dex.orderly.network/test-dex-0787/" class="inline-block bg-white text-primary-bg font-medium rounded-md px-6 py-3 hover:bg-gray-200 transition-colors" x-text="t('cta.button')"></a>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-12 md:py-20 bg-white dark:bg-gray-900 px-4 md:px-6">
+    <h2 class="text-2xl md:text-4xl font-semibold text-center primary-text mb-8" x-text="t('about.title')"></h2>
+    <p class="max-w-3xl mx-auto text-lg text-gray-700 dark:text-gray-300" x-text="t('about.content')"></p>
+  </section>
+
+  <!-- Fee Structure Section -->
+  <section id="fee" class="py-12 md:py-20 bg-gray-50 dark:bg-gray-800 px-4 md:px-6">
+    <h2 class="text-2xl md:text-4xl font-semibold text-center primary-text mb-8" x-text="t('fee.title')"></h2>
+    <p class="max-w-2xl mx-auto text-center text-gray-700 dark:text-gray-300" x-text="t('fee.content')"></p>
+    <div class="mt-8 flex flex-col md:flex-row justify-center items-center gap-6">
+      <div class="p-4 bg-white dark:bg-gray-900 rounded-lg shadow-md w-64">
+        <h3 class="font-medium text-center mb-2">Maker Fee</h3>
+        <p class="text-3xl font-bold text-primary-text text-center">0.02%</p>
+      </div>
+      <div class="p-4 bg-white dark:bg-gray-900 rounded-lg shadow-md w-64">
+        <h3 class="font-medium text-center mb-2">Taker Fee</h3>
+        <p class="text-3xl font-bold text-primary-text text-center">0.05%</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-12 md:py-20 bg-white dark:bg-gray-900 px-4 md:px-6">
+    <h2 class="text-2xl md:text-4xl font-semibold text-center primary-text mb-8">FAQ</h2>
+    <div class="space-y-6 max-w-3xl mx-auto">
+      <template x-for="item in faqItems" :key="item.question">
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-4">
+          <h3 class="font-medium text-lg text-primary-text" x-text="item.question"></h3>
+          <p class="mt-2 text-gray-600 dark:text-gray-300" x-text="item.answer"></p>
+        </div>
+      </template>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="py-12 md:py-20 bg-gray-50 dark:bg-gray-800 px-4 md:px-6">
+    <h2 class="text-2xl md:text-4xl font-semibold text-center primary-text mb-8" x-text="t('team.title')"></h2>
+    <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+      <template x-for="member in teamMembers" :key="member.name">
+        <div class="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 w-72 text-center">
+          <img :src="member.image" :alt="member.name" class="w-24 h-24 rounded-full mx-auto mb-4" />
+          <h3 class="font-medium text-xl text-primary-text" x-text="member.name"></h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-2" x-text="member.description"></p>
+          <div class="flex justify-center space-x-4">
+            <template x-for="link in member.links" :key="link.url">
+              <a :href="link.url" target="_blank" rel="noopener" class="text-primary-text hover:underline" x-text="link.label"></a>
+            </template>
+          </div>
+        </div>
+      </template>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 dark:bg-gray-800 py-8 px-4 md:px-6 text-center">
+    <div class="mb-4">
+      <a href="https://dex.orderly.network/test-dex-0787/" class="inline-block primary-bg text-white font-medium rounded-md px-6 py-3 hover:bg-blue-700 transition-colors" x-text="t('footer.cta')"></a>
+    </div>
+    <p class="text-sm text-gray-600 dark:text-gray-300">© 2026 Shitzu DEX. All rights reserved.</p>
+  </footer>
+</body>
+</html>
